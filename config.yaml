@@ -1,0 +1,5 @@
+log:
+  # 日志路径
+  log_path: "./short_url.log"
+  # 日志分割时间
+  rotation_time: 86400
