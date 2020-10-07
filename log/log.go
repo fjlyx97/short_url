@@ -8,6 +8,8 @@ import (
 	"time"
 )
 
+var GLogger = logrus.New()
+
 func InitLogger() {
 	fmt.Println(config.GConfig)
 	writer, err := rotatelogs.New(
@@ -18,6 +20,7 @@ func InitLogger() {
 	if err != nil {
 		panic(err)
 	}
-	logrus.SetOutput(writer)
-	logrus.Info("Initial logger success.")
+	GLogger.SetOutput(writer)
+	GLogger.SetFormatter(&logrus.JSONFormatter{})
+	GLogger.Info("Initial logger success.")
 }
