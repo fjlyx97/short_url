@@ -33,7 +33,7 @@ type Snowflake struct {
 }
 
 // 生成雪花算法模型，目前位数都是Hard code
-func NewSnowflake(startTimestamp int64, dataCenterId int64, workerId int64) *Snowflake {
+func NewSnowflake(startTimestamp int64, dataCenterId int64, workerId int64) (*Snowflake, error) {
 	var maxWorkerId int64 = (-1 << 5) ^ -1
 	var maxDataCenterId int64 = (-1 << 5) ^ -1
 	// 41位，最大69年
@@ -42,16 +42,16 @@ func NewSnowflake(startTimestamp int64, dataCenterId int64, workerId int64) *Sno
 	if dataCenterId < 0 || dataCenterId > maxDataCenterId ||
 		workerId < 0 || workerId > maxWorkerId {
 		log.GLogger.Errorf("workerId or dataCenterId error , workerId : %d , dataCenterId : %d", workerId, dataCenterId)
-		return nil
+		return nil, errors.New("workerId or dataCenterId error")
 	}
 	// 校验时间戳
 	if startTimestamp > time.Now().UnixNano()/int64(time.Millisecond) {
 		log.GLogger.Errorf("start time over now , startTime : %d", startTimestamp)
-		return nil
+		return nil, errors.New("start time over now , startTime")
 	}
 	if time.Now().UnixNano()/int64(time.Millisecond)-startTimestamp > maxTime {
 		log.GLogger.Errorf("nowTime subtract startTime over 69 years")
-		return nil
+		return nil, errors.New("nowTime subtract startTime over 69 years")
 	}
 	return &Snowflake{
 		startTimestamp:    startTimestamp,
@@ -67,7 +67,7 @@ func NewSnowflake(startTimestamp int64, dataCenterId int64, workerId int64) *Sno
 		workerIdShift:     12,
 		timestampShift:    22,
 		lock:              sync.Mutex{},
-	}
+	}, nil
 }
 
 func (s *Snowflake) NextId() (int64, error) {
