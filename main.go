@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/fjlyx97/short_url/controllers"
+	"github.com/fjlyx97/short_url/dao"
 	pb "github.com/fjlyx97/short_url/proto"
 	conf "github.com/fjlyx97/short_url/utils/config"
 	"github.com/fjlyx97/short_url/utils/log"
@@ -21,7 +22,10 @@ func main() {
 		panic(err)
 	}
 	grpcServer := grpc.NewServer()
-	pb.RegisterShortUrlServiceServer(grpcServer, controllers.NewShortUrlServer())
+	shortUrlServer := controllers.NewShortUrlServer(
+		&dao.MysqlDB{},
+	)
+	pb.RegisterShortUrlServiceServer(grpcServer, shortUrlServer)
 	err = grpcServer.Serve(listen)
 	if err != nil {
 		log.GLogger.Fatal(err)

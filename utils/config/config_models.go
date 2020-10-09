@@ -4,6 +4,7 @@ type Config struct {
 	BaseModel      `yaml:"base"`
 	LogModel       `yaml:"log"`
 	SnowFlakeModel `yaml:"snowflake"`
+	MysqlModel     `yaml:"mysql"`
 }
 
 type BaseModel struct {
@@ -22,4 +23,15 @@ type SnowFlakeModel struct {
 	SequenceBits     int64 `yaml:"sequence_bits"`
 	DataCenterIdBits int64 `yaml:"datacenterid_bits"`
 	WorkerIdBits     int64 `yaml:"workerid_bits"`
+}
+
+type MysqlModel struct {
+	Ip             string `yaml:"ip"`
+	Port           string `yaml:"port"`
+	User           string `yaml:"user"`
+	Password       string `yaml:"password"`
+	DatabaseName   string `yaml:"database_name"`
+	ConnectTimeout string `yaml:"connect_timeout"`
+	ReadTimeout    string `yaml:"read_timeout"`
+	WriteTimeout   string `yaml:"write_timeout"`
 }

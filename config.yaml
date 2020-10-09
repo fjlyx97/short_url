@@ -14,3 +14,14 @@ snowflake:
   sequence_bits: 12
   datacenterid_bits: 5
   workerid_bits: 5
+
+mysql:
+  ip: 9.134.242.17
+  port: 3306
+  user: root
+  password: 123456
+  connect_timeout: 10
+  database_name: short_url
+  # 读写超时时间为0代表不限制
+  read_timeout: 0
+  write_timeout: 0
