@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
+	"time"
 )
 
 type MysqlDB struct {
@@ -19,6 +20,20 @@ func (m *MysqlDB) InitDB(ip string, port string, user string, password string, d
 		errMsg := fmt.Sprintf("Initial database error, err : %s", err)
 		return errors.New(errMsg)
 	}
-	GDBService = db
+	gDbService = db
+	return nil
+}
+func (m *MysqlDB) CreateLink(uid int64, url string, availableAt int64) error {
+	link := &LinksModel{
+		Uid:         uid,
+		Url:         url,
+		InsertAt:    time.Now().UnixNano(),
+		AvailableAt: availableAt,
+		Available:   1,
+	}
+	err := gDbService.Create(&link).Error
+	if err != nil {
+		return err
+	}
 	return nil
 }

@@ -2,13 +2,11 @@ package controllers
 
 import (
 	"context"
-	"fmt"
 	"github.com/fjlyx97/short_url/dao"
 	pb "github.com/fjlyx97/short_url/proto"
 	"github.com/fjlyx97/short_url/services/snowflake"
 	"github.com/fjlyx97/short_url/utils/config"
 	"github.com/fjlyx97/short_url/utils/log"
-	"strconv"
 )
 
 type ShortUrlServer struct {
@@ -53,17 +51,8 @@ func NewShortUrlServer(db dao.DBInterface) *ShortUrlServer {
 }
 
 func (s *ShortUrlServer) SetShortUrl(ctx context.Context, req *pb.SetUrlReq) (*pb.SetUrlRsp, error) {
-	// Mock 数据
-	fmt.Println(req.GetUrl())
-	id, err := s.snowFlake.NextId()
-	if err != nil {
-		log.GLogger.Error(err)
-	}
-	setUrlRsp := &pb.SetUrlRsp{
-		Code:     pb.Code_OK,
-		ShortUrl: strconv.FormatInt(id, 10),
-	}
-	return setUrlRsp, nil
+	//TODO 校验参数
+	return nil, nil
 }
 
 func (s *ShortUrlServer) GetAfterForwardUrl(ctx context.Context, req *pb.GetAfterForwardUrlReq) (*pb.GetAfterForwardUrlRsp, error) {
