@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package ShortUrl;
+
+service ShortUrlService {
+    rpc SetShortUrl (SetUrlReq) returns (SetUrlRsp) {}
+    rpc GetAfterForwardUrl(GetAfterForwardUrlReq) returns (GetAfterForwardUrlRsp) {}
+}
+
+message SetUrlReq {
+    string url = 1;
+}
+
+message SetUrlRsp {
+    Code code = 1;
+    string shortUrl = 2;
+}
+
+message GetAfterForwardUrlReq {
+    string url = 1;
+}
+
+message GetAfterForwardUrlRsp {
+    Code code = 1;
+}
+
+enum Code {
+    OK = 0;
+    ERR_PARAMETER = 10;
+    ERR_SERVICE = 20;
+    ERR_NOT_FOUND = 30;
+    ERR_UNKNOWN = 100;
+}

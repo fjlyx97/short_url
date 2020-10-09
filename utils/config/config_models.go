@@ -1,7 +1,12 @@
 package config
 
 type Config struct {
-	LogModel `yaml:"log"`
+	LogModel  `yaml:"log"`
+	BaseModel `yaml:"base"`
+}
+
+type BaseModel struct {
+	Port int32 `yaml:"port"`
 }
 
 type LogModel struct {

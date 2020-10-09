@@ -1,3 +1,6 @@
+base:
+  port: 8002
+
 log:
   # 日志路径
   log_path: "./short_url.log"

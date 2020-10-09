@@ -1,8 +1,7 @@
 package log
 
 import (
-	"fmt"
-	"github.com/fjlyx97/short_url/config"
+	"github.com/fjlyx97/short_url/utils/config"
 	rotatelogs "github.com/lestrrat-go/file-rotatelogs"
 	"github.com/sirupsen/logrus"
 	"time"
@@ -11,7 +10,6 @@ import (
 var GLogger = logrus.New()
 
 func InitLogger() {
-	fmt.Println(config.GConfig)
 	writer, err := rotatelogs.New(
 		config.GConfig.LogModel.LogPath+".%Y%m%d%H%M",
 		//rotatelogs.WithLinkName(config.GConfig.LogModel.LogPath),
@@ -23,4 +21,5 @@ func InitLogger() {
 	GLogger.SetOutput(writer)
 	GLogger.SetFormatter(&logrus.JSONFormatter{})
 	GLogger.Info("Initial logger success.")
+	GLogger.Info(config.GConfig)
 }

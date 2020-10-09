@@ -9,21 +9,21 @@ import (
 )
 
 const (
-	addr = "localhost:10011"
+	addr = "localhost:8002"
 )
 
-func Test_server_SayHello(t *testing.T) {
+func Test_server_SetShortUrl(t *testing.T) {
 	conn, err := grpc.Dial(addr, grpc.WithInsecure())
 	if err != nil {
 		log.Fatalf("did not connect: %v", err)
 	}
 	defer conn.Close()
-	c := pb.NewGreeterClient(conn)
-	r, err := c.SayHello(context.Background(), &pb.HelloRequest{
-		Name: "Yes..",
+	c := pb.NewShortUrlServiceClient(conn)
+	r, err := c.SetShortUrl(context.Background(), &pb.SetUrlReq{
+		Url: "www.baidu.com",
 	})
 	if err != nil {
 		t.Error(err)
 	}
-	t.Log(r.Message)
+	t.Log(r.ShortUrl)
 }

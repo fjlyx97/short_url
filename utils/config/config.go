@@ -2,7 +2,6 @@ package config
 
 import (
 	"flag"
-	"fmt"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
 )
@@ -28,5 +27,4 @@ func InitConfig() {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println("Read config success.")
 }
