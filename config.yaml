@@ -6,3 +6,11 @@ log:
   log_path: "./short_url.log"
   # 日志分割时间
   rotation_time: 86400
+
+snowflake:
+  start_timestamp: 1602228331822
+  datacenter_id: 1
+  worker_id: 1
+  sequence_bits: 12
+  datacenterid_bits: 5
+  workerid_bits: 5

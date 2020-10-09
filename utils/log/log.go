@@ -20,6 +20,7 @@ func InitLogger() {
 	}
 	GLogger.SetOutput(writer)
 	GLogger.SetFormatter(&logrus.JSONFormatter{})
+	GLogger.SetReportCaller(true)
 	GLogger.Info("Initial logger success.")
 	GLogger.Info(config.GConfig)
 }

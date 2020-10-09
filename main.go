@@ -21,7 +21,7 @@ func main() {
 		panic(err)
 	}
 	grpcServer := grpc.NewServer()
-	pb.RegisterShortUrlServiceServer(grpcServer, &controllers.ShortUrlServer{})
+	pb.RegisterShortUrlServiceServer(grpcServer, controllers.NewShortUrlServer())
 	err = grpcServer.Serve(listen)
 	if err != nil {
 		log.GLogger.Fatal(err)

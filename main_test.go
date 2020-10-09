@@ -25,5 +25,7 @@ func Test_server_SetShortUrl(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	t.Log(r.ShortUrl)
+	t.Log(r)
+	t.Log(r.GetCode())
+	t.Log(r.GetShortUrl())
 }
