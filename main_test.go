@@ -22,7 +22,7 @@ func Test_server_SetShortUrl(t *testing.T) {
 	c := pb.NewShortUrlServiceClient(conn)
 	w := sync.WaitGroup{}
 
-	threads := 100
+	threads := 10
 	w.Add(threads)
 	for i := 0; i < threads; i++ {
 		go func() {
@@ -39,4 +39,22 @@ func Test_server_SetShortUrl(t *testing.T) {
 		}()
 	}
 	w.Wait()
+}
+
+func Test_server_GetAfterForwardUrl(t *testing.T) {
+	conn, err := grpc.Dial(addr, grpc.WithInsecure())
+	if err != nil {
+		log.Fatalf("did not connect: %v", err)
+	}
+	defer conn.Close()
+	c := pb.NewShortUrlServiceClient(conn)
+	r, err := c.GetAfterForwardUrl(context.Background(), &pb.GetAfterForwardUrlReq{
+		Url: "UwC2QQln1",
+	})
+	if err != nil {
+		t.Error(err)
+	}
+	t.Log(r)
+	t.Log(r.GetCode())
+	t.Log(r.GetLongUrl())
 }

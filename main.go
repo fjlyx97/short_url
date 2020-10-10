@@ -12,6 +12,12 @@ import (
 )
 
 func main() {
+	// 捕获panic异常并记录
+	defer func() {
+		if err := recover(); err != nil {
+			log.GLogger.Fatalf("Server crash , err : %s", err)
+		}
+	}()
 	// 初始化配置文件
 	conf.InitConfig()
 	log.InitLogger()

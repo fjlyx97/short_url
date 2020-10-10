@@ -22,6 +22,7 @@ message GetAfterForwardUrlReq {
 
 message GetAfterForwardUrlRsp {
     Code code = 1;
+    string longUrl = 2;
 }
 
 enum Code {

@@ -37,3 +37,20 @@ func (m *MysqlDB) CreateLink(uid int64, url string, availableAt int64) error {
 	}
 	return nil
 }
+
+func (m *MysqlDB) FindLink(uid int64) (string, error) {
+	link := &Links{
+		Uid: uid,
+	}
+	var links []*Links
+	err := gDbService.Find(&links, link).Error
+	if err != nil {
+		return "", err
+	}
+	if len(links) != 1 {
+		errMsg := fmt.Sprintf("Too many links , num : %s", len(links))
+		return "", errors.New(errMsg)
+	}
+
+	return links[0].Url, nil
+}

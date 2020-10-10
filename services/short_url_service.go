@@ -28,3 +28,15 @@ func (s *ShortUrlService) SetShortUrl(db dao.DBInterface, urlConversion UrlConve
 	shortUrl := config.GConfig.BaseModel.BaseUrl + utils.Base10ToBase62(uid)
 	return shortUrl, nil
 }
+
+func (s *ShortUrlService) GetLongUrl(db dao.DBInterface, shortUrl string) (string, error) {
+	uid := utils.Base62ToBase10(shortUrl)
+	// TODO 先查redis
+
+	// 查询数据库
+	longUrl, err := db.FindLink(uid)
+	if err != nil {
+		return "", err
+	}
+	return longUrl, nil
+}
