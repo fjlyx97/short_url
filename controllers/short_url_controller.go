@@ -11,8 +11,8 @@ import (
 )
 
 type ShortUrlServer struct {
-	snowFlake *snowflake.Snowflake
-	db        dao.DBInterface
+	urlConversion services.UrlConversion
+	db            dao.DBInterface
 }
 
 func NewShortUrlServer(db dao.DBInterface) *ShortUrlServer {
@@ -46,8 +46,8 @@ func NewShortUrlServer(db dao.DBInterface) *ShortUrlServer {
 	}
 
 	return &ShortUrlServer{
-		snowFlake: snowFlake,
-		db:        db,
+		urlConversion: snowFlake,
+		db:            db,
 	}
 }
 
@@ -56,7 +56,7 @@ func (s *ShortUrlServer) SetShortUrl(ctx context.Context, req *pb.SetUrlReq) (*p
 
 	url := req.GetUrl()
 	service := services.ShortUrlService{}
-	shortUrl, err := service.SetShortUrl(s.db, s.snowFlake, url)
+	shortUrl, err := service.SetShortUrl(s.db, s.urlConversion, url)
 	rsp := &pb.SetUrlRsp{
 		Code:     0,
 		ShortUrl: "",
