@@ -5,6 +5,7 @@ import (
 	pb "github.com/fjlyx97/short_url/proto"
 	"google.golang.org/grpc"
 	"log"
+	"sync"
 	"testing"
 )
 
@@ -19,13 +20,23 @@ func Test_server_SetShortUrl(t *testing.T) {
 	}
 	defer conn.Close()
 	c := pb.NewShortUrlServiceClient(conn)
-	r, err := c.SetShortUrl(context.Background(), &pb.SetUrlReq{
-		Url: "www.baidu.com",
-	})
-	if err != nil {
-		t.Error(err)
+	w := sync.WaitGroup{}
+
+	threads := 100
+	w.Add(threads)
+	for i := 0; i < threads; i++ {
+		go func() {
+			r, err := c.SetShortUrl(context.Background(), &pb.SetUrlReq{
+				Url: "www.baidu.com",
+			})
+			if err != nil {
+				t.Error(err)
+			}
+			t.Log(r)
+			t.Log(r.GetCode())
+			t.Log(r.GetShortUrl())
+			w.Done()
+		}()
 	}
-	t.Log(r)
-	t.Log(r.GetCode())
-	t.Log(r.GetShortUrl())
+	w.Wait()
 }

@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/fjlyx97/short_url/dao"
 	pb "github.com/fjlyx97/short_url/proto"
+	"github.com/fjlyx97/short_url/services"
 	"github.com/fjlyx97/short_url/services/snowflake"
 	"github.com/fjlyx97/short_url/utils/config"
 	"github.com/fjlyx97/short_url/utils/log"
@@ -52,10 +53,25 @@ func NewShortUrlServer(db dao.DBInterface) *ShortUrlServer {
 
 func (s *ShortUrlServer) SetShortUrl(ctx context.Context, req *pb.SetUrlReq) (*pb.SetUrlRsp, error) {
 	//TODO 校验参数
-	return nil, nil
+
+	url := req.GetUrl()
+	service := services.ShortUrlService{}
+	shortUrl, err := service.SetShortUrl(s.db, s.snowFlake, url)
+	rsp := &pb.SetUrlRsp{
+		Code:     0,
+		ShortUrl: "",
+	}
+	if err != nil {
+		rsp.Code = pb.Code_ERR_SERVICE
+		return rsp, err
+	}
+	rsp.Code = pb.Code_OK
+	rsp.ShortUrl = shortUrl
+	return rsp, nil
 }
 
 func (s *ShortUrlServer) GetAfterForwardUrl(ctx context.Context, req *pb.GetAfterForwardUrlReq) (*pb.GetAfterForwardUrlRsp, error) {
+	//TODO 校验参数
 
 	return nil, nil
 }

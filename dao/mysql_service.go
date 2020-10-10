@@ -24,7 +24,7 @@ func (m *MysqlDB) InitDB(ip string, port string, user string, password string, d
 	return nil
 }
 func (m *MysqlDB) CreateLink(uid int64, url string, availableAt int64) error {
-	link := &LinksModel{
+	link := &Links{
 		Uid:         uid,
 		Url:         url,
 		InsertAt:    time.Now().UnixNano(),

@@ -3,6 +3,7 @@ package services
 import (
 	"github.com/fjlyx97/short_url/dao"
 	"github.com/fjlyx97/short_url/services/snowflake"
+	"github.com/fjlyx97/short_url/utils"
 	"github.com/fjlyx97/short_url/utils/config"
 	"time"
 )
@@ -25,6 +26,6 @@ func (s *ShortUrlService) SetShortUrl(db dao.DBInterface, snowflake *snowflake.S
 	if err != nil {
 		return "", err
 	}
-	shortUrl := config.GConfig.BaseModel.BaseUrl + "123"
+	shortUrl := config.GConfig.BaseModel.BaseUrl + utils.Base10ToBase62(uid)
 	return shortUrl, nil
 }
