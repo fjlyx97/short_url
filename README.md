@@ -1,5 +1,12 @@
+# 编译命令
+## proto 文件
+```shell script
+protoc -I . -I ${GOPATH}/pkg/mod/github.com/envoyproxy/protoc-gen-validate@v0.4.1 --go_out=plugins=grpc:. --validate_out="lang=go:./" short_url.proto
+```
+
 # 用到的第三方模块
 - gRpc 通信模块
+- protoc-gen-validate proto文件校验模块
 - yaml.v2 配置文件解析模块
 - logrus 日志模块
 - file-rotatelogs 日志文件切割

@@ -54,15 +54,19 @@ func NewShortUrlServer(db dao.DBInterface) *ShortUrlServer {
 
 func (s *ShortUrlServer) SetShortUrl(ctx context.Context, req *pb.SetUrlReq) (*pb.SetUrlRsp, error) {
 	_ = ctx
-	//TODO 校验参数
-
-	url := req.GetUrl()
-	service := services.ShortUrlService{}
-	shortUrl, err := service.SetShortUrl(s.db, s.urlConversion, url)
 	rsp := &pb.SetUrlRsp{
 		Code:     0,
 		ShortUrl: "",
 	}
+	err := req.Validate()
+	if err != nil {
+		log.GLogger.Error(err)
+		rsp.Code = pb.Code_ERR_PARAMETER
+		return rsp, err
+	}
+	url := req.GetUrl()
+	service := services.ShortUrlService{}
+	shortUrl, err := service.SetShortUrl(s.db, s.urlConversion, url)
 	if err != nil {
 		log.GLogger.Error(err)
 		rsp.Code = pb.Code_ERR_SERVICE
@@ -75,15 +79,19 @@ func (s *ShortUrlServer) SetShortUrl(ctx context.Context, req *pb.SetUrlReq) (*p
 
 func (s *ShortUrlServer) GetAfterForwardUrl(ctx context.Context, req *pb.GetAfterForwardUrlReq) (*pb.GetAfterForwardUrlRsp, error) {
 	_ = ctx
-	//TODO 校验参数
-
-	url := req.GetUrl()
-	service := services.ShortUrlService{}
-	longUrl, err := service.GetLongUrl(s.db, url)
 	rsp := &pb.GetAfterForwardUrlRsp{
 		Code:    0,
 		LongUrl: "",
 	}
+	err := req.Validate()
+	if err != nil {
+		log.GLogger.Error(err)
+		rsp.Code = pb.Code_ERR_PARAMETER
+		return rsp, err
+	}
+	url := req.GetUrl()
+	service := services.ShortUrlService{}
+	longUrl, err := service.GetLongUrl(s.db, url)
 	if err != nil {
 		log.GLogger.Error(err)
 		rsp.Code = pb.Code_ERR_SERVICE

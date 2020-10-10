@@ -22,12 +22,12 @@ func Test_server_SetShortUrl(t *testing.T) {
 	c := pb.NewShortUrlServiceClient(conn)
 	w := sync.WaitGroup{}
 
-	threads := 10
+	threads := 1
 	w.Add(threads)
 	for i := 0; i < threads; i++ {
 		go func() {
 			r, err := c.SetShortUrl(context.Background(), &pb.SetUrlReq{
-				Url: "www.baidu.com",
+				Url: "https://baidu.com/123",
 			})
 			if err != nil {
 				t.Error(err)

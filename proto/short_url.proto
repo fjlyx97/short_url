@@ -1,5 +1,8 @@
 syntax = "proto3";
 
+import "validate/validate.proto";
+option go_package = "ShortUrl";
+
 package ShortUrl;
 
 service ShortUrlService {
@@ -8,7 +11,7 @@ service ShortUrlService {
 }
 
 message SetUrlReq {
-    string url = 1;
+    string url = 1 [(validate.rules).string = {uri: true , max_len: 8182}];
 }
 
 message SetUrlRsp {
@@ -17,7 +20,7 @@ message SetUrlRsp {
 }
 
 message GetAfterForwardUrlReq {
-    string url = 1;
+    string url = 1 [(validate.rules).string = {uri: true , max_len: 8182}];
 }
 
 message GetAfterForwardUrlRsp {
