@@ -5,6 +5,7 @@ import (
 	"github.com/fjlyx97/short_url/controllers"
 	"github.com/fjlyx97/short_url/dao"
 	pb "github.com/fjlyx97/short_url/proto"
+	"github.com/fjlyx97/short_url/services"
 	conf "github.com/fjlyx97/short_url/utils/config"
 	"github.com/fjlyx97/short_url/utils/log"
 	"google.golang.org/grpc"
@@ -32,6 +33,9 @@ func main() {
 		&dao.MysqlDB{},
 	)
 	pb.RegisterShortUrlServiceServer(grpcServer, shortUrlServer)
+	// 开启健康检查
+	services.RunHealthCheck()
+	// 启动grpc服务
 	err = grpcServer.Serve(listen)
 	if err != nil {
 		log.GLogger.Fatal(err)

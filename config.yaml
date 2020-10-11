@@ -1,6 +1,8 @@
 base:
   port: 8002
   base_url: "dwz.cn/"
+  health_check_url: "/health"
+  health_check_port: 8003
 
 log:
   # 日志路径

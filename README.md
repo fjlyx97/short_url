@@ -1,8 +1,27 @@
-# 编译命令
-## proto 文件
+# Go短网址微服务
+===
+Go编写的短网址微服务，用于将长网址映射成指定的短网址：
+```
+https://github.com/fjlyx97/short_url ==> your_short_url.cn/xxxx
+```
+
+# 编译
+## 编译程序
+1. 确保Go环境安装正确
+2. go build
+
+## proto 文件（可以不用编译）
 ```shell script
 protoc -I . -I ${GOPATH}/pkg/mod/github.com/envoyproxy/protoc-gen-validate@v0.4.1 --go_out=plugins=grpc:. --validate_out="lang=go:./" short_url.proto
 ```
+
+# 运行
+1. 直接启动编译后的程序，确保配置文件配置正常
+2. main_test.go用来测试是否成功生成短网址
+
+# 协议
+1. grpc协议见proto文件
+2. 健康检查路径见配置文件
 
 # 用到的第三方模块
 - gRpc 通信模块
@@ -23,3 +42,6 @@ CREATE TABLE links (
      available tinyint(1) not null comment '是否生效'
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 ```
+
+# LICENSE
+The MIT License (MIT)

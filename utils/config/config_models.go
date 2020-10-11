@@ -8,8 +8,10 @@ type Config struct {
 }
 
 type BaseModel struct {
-	Port    int32  `yaml:"port"`
-	BaseUrl string `yaml:"base_url"`
+	Port            int32  `yaml:"port"`
+	BaseUrl         string `yaml:"base_url"`
+	HealthCheckUrl  string `yaml:"health_check_url"`
+	HealthCheckPort int32  `yaml:"health_check_port"`
 }
 
 type LogModel struct {
