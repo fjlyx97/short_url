@@ -48,7 +48,7 @@ func (m *MysqlDB) FindLink(uid int64) (string, error) {
 		return "", err
 	}
 	if len(links) != 1 {
-		errMsg := fmt.Sprintf("Too many links , num : %s", len(links))
+		errMsg := fmt.Sprintf("Too many or less links , num : %d", len(links))
 		return "", errors.New(errMsg)
 	}
 
