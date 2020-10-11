@@ -20,7 +20,7 @@ message SetUrlRsp {
 }
 
 message GetAfterForwardUrlReq {
-    string url = 1 [(validate.rules).string = {uri: true , max_len: 8182}];
+    string url = 1 [(validate.rules).string.max_len = 20];
 }
 
 message GetAfterForwardUrlRsp {

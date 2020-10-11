@@ -196,23 +196,10 @@ func (m *GetAfterForwardUrlReq) Validate() error {
 		return nil
 	}
 
-	if utf8.RuneCountInString(m.GetUrl()) > 8182 {
+	if utf8.RuneCountInString(m.GetUrl()) > 20 {
 		return GetAfterForwardUrlReqValidationError{
 			field:  "Url",
-			reason: "value length must be at most 8182 runes",
-		}
-	}
-
-	if uri, err := url.Parse(m.GetUrl()); err != nil {
-		return GetAfterForwardUrlReqValidationError{
-			field:  "Url",
-			reason: "value must be a valid URI",
-			cause:  err,
-		}
-	} else if !uri.IsAbs() {
-		return GetAfterForwardUrlReqValidationError{
-			field:  "Url",
-			reason: "value must be absolute",
+			reason: "value length must be at most 20 runes",
 		}
 	}
 
