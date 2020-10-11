@@ -10,8 +10,9 @@ https://github.com/fjlyx97/short_url ==> your_short_url.cn/xxxx
 2. go build
 
 ## proto 文件（可以不用编译）
+- protoc-gen-validate的路径需要修改
 ```shell script
-protoc -I . -I ${GOPATH}/pkg/mod/github.com/envoyproxy/protoc-gen-validate@v0.4.1 --go_out=plugins=grpc:. --validate_out="lang=go:./" short_url.proto
+protoc -I . -I ${GOPATH}/pkg/mod/github.com/envoyproxy/protoc-gen-validate@v0.4.1 --go_out=plugins=grpc:. --validate_out="lang=go:./" *.proto
 ```
 
 # 运行
@@ -21,6 +22,16 @@ protoc -I . -I ${GOPATH}/pkg/mod/github.com/envoyproxy/protoc-gen-validate@v0.4.
 # 协议
 1. grpc协议见proto文件
 2. 健康检查路径见配置文件
+## 示例
+```
+接口：SetShortUrl 
+参数：Url: "https://baidu.com/123"
+返回值：dwz.cn/SLsBGejZ3
+
+接口：GetAfterForwardUrl
+参数：Url: "UwC2QQln1"
+返回值：longUrl:"https://baidu.com/123"
+```
 
 ## 短链生成算法
 1. Snowflake雪花算法
