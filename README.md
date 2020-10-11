@@ -1,5 +1,4 @@
 # Go短网址微服务
-===
 Go编写的短网址微服务，用于将长网址映射成指定的短网址：
 ```
 https://github.com/fjlyx97/short_url ==> your_short_url.cn/xxxx
@@ -7,7 +6,7 @@ https://github.com/fjlyx97/short_url ==> your_short_url.cn/xxxx
 
 # 编译
 ## 编译程序
-1. 确保Go环境安装正确
+1. 确保Go环境安装正确（Go 1.13 , Go Module开启）
 2. go build
 
 ## proto 文件（可以不用编译）
@@ -22,6 +21,9 @@ protoc -I . -I ${GOPATH}/pkg/mod/github.com/envoyproxy/protoc-gen-validate@v0.4.
 # 协议
 1. grpc协议见proto文件
 2. 健康检查路径见配置文件
+
+## 短链生成算法
+1. Snowflake雪花算法
 
 # 用到的第三方模块
 - gRpc 通信模块
