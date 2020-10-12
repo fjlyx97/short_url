@@ -1,6 +1,8 @@
 package main
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/gin-gonic/gin"
+)
 
 const (
 	Address = "0.0.0.0:8080"
@@ -12,6 +14,7 @@ type SimpleServer struct {
 
 func (s *SimpleServer) Init() {
 	s.GinServer = gin.Default()
+	s.GinServer.LoadHTMLFiles("./views/index.html")
 	s.GinServer.GET("/", s.WebIndex)
 	s.GinServer.GET("/:url", s.GetUrl)
 	s.GinServer.POST("/", s.SetUrl)

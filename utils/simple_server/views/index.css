@@ -1,0 +1,30 @@
+#menu {
+    width: 1200px;
+    margin: auto;
+}
+
+#service {
+    width: 1200px;
+    margin: auto;
+    margin-top: 50px;
+}
+
+#input {
+    width: 800px;
+    margin: auto;
+}
+
+#information {
+    width: 1200px;
+    margin: auto;
+    margin-top: 50px;
+}
+
+#information_card {
+    margin: 30px;
+}
+
+.common {
+    width: 1200px;
+    margin: auto;
+}

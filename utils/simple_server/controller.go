@@ -6,7 +6,7 @@ import (
 )
 
 func (s *SimpleServer) WebIndex(c *gin.Context) {
-	c.String(200, "Okk")
+	c.HTML(http.StatusOK, "index.html", gin.H{})
 }
 
 func (s *SimpleServer) SetUrl(c *gin.Context) {
