@@ -1,12 +1,13 @@
-package snowflake
+package test
 
 import (
+	"github.com/fjlyx97/short_url/services/snowflake"
 	"testing"
 	"time"
 )
 
 func TestNewSnowflake(t *testing.T) {
-	snowFlake, err := NewSnowflake(1602228331822, 1, 1)
+	snowFlake, err := snowflake.NewSnowflake(1602228331822, 1, 1)
 	if err != nil {
 		t.Error(err)
 	}

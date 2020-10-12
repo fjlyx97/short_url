@@ -1,4 +1,4 @@
-package main
+package test
 
 import (
 	"context"
@@ -49,7 +49,7 @@ func Test_server_GetAfterForwardUrl(t *testing.T) {
 	defer conn.Close()
 	c := pb.NewShortUrlServiceClient(conn)
 	r, err := c.GetAfterForwardUrl(context.Background(), &pb.GetAfterForwardUrlReq{
-		Url: "EYO34lCH4",
+		Url: "wcwpWVT25",
 	})
 	if err != nil {
 		t.Error(err)
