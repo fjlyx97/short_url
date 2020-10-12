@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+	"net/http"
 )
 
 const (
@@ -15,8 +16,9 @@ type SimpleServer struct {
 func (s *SimpleServer) Init() {
 	s.GinServer = gin.Default()
 	s.GinServer.LoadHTMLFiles("./views/index.html")
+	s.GinServer.StaticFS("/static/", http.Dir("./views"))
 	s.GinServer.GET("/", s.WebIndex)
-	s.GinServer.GET("/:url", s.GetUrl)
+	//s.GinServer.GET("/:url", s.GetUrl)
 	s.GinServer.POST("/", s.SetUrl)
 }
 
