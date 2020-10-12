@@ -22,12 +22,12 @@ func Test_server_SetShortUrl(t *testing.T) {
 	c := pb.NewShortUrlServiceClient(conn)
 	w := sync.WaitGroup{}
 
-	threads := 100
+	threads := 1
 	w.Add(threads)
 	for i := 0; i < threads; i++ {
 		go func() {
 			r, err := c.SetShortUrl(context.Background(), &pb.SetUrlReq{
-				Url: "https://baidu.com/123",
+				Url: "https://baidu.com/456",
 			})
 			if err != nil {
 				t.Error(err)
@@ -49,7 +49,7 @@ func Test_server_GetAfterForwardUrl(t *testing.T) {
 	defer conn.Close()
 	c := pb.NewShortUrlServiceClient(conn)
 	r, err := c.GetAfterForwardUrl(context.Background(), &pb.GetAfterForwardUrlReq{
-		Url: "UwC2QQln1",
+		Url: "EYO34lCH4",
 	})
 	if err != nil {
 		t.Error(err)

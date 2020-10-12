@@ -4,6 +4,7 @@ import (
 	"github.com/fjlyx97/short_url/dao"
 	"github.com/fjlyx97/short_url/utils"
 	"github.com/fjlyx97/short_url/utils/config"
+	"github.com/fjlyx97/short_url/utils/log"
 	"time"
 )
 
@@ -38,9 +39,17 @@ func (s *ShortUrlService) SetShortUrl(db dao.DBInterface, cache dao.CacheInterfa
 	return shortUrl, nil
 }
 
-func (s *ShortUrlService) GetLongUrl(db dao.DBInterface, shortUrl string) (string, error) {
+func (s *ShortUrlService) GetLongUrl(db dao.DBInterface, cache dao.CacheInterface, shortUrl string) (string, error) {
 	uid := utils.Base62ToBase10(shortUrl)
-	// TODO 先查redis
+	// 先查缓存
+	if cache != nil {
+		longUrl, err := cache.GetUrl(shortUrl)
+		if err != nil {
+			log.GLogger.Info(err)
+		} else {
+			return longUrl, err
+		}
+	}
 
 	// 查询数据库
 	longUrl, err := db.FindLink(uid)

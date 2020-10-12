@@ -111,7 +111,7 @@ func (s *ShortUrlServer) GetAfterForwardUrl(ctx context.Context, req *pb.GetAfte
 	}
 	url := req.GetUrl()
 	service := services.ShortUrlService{}
-	longUrl, err := service.GetLongUrl(s.db, url)
+	longUrl, err := service.GetLongUrl(s.db, s.cache, url)
 	if err != nil {
 		log.GLogger.Error(err)
 		rsp.Code = pb.Code_ERR_SERVICE

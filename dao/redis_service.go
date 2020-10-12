@@ -52,8 +52,15 @@ func (r *RedisCache) SetUrl(uidB62 string, url string) error {
 }
 
 func (r *RedisCache) GetUrl(url string) (string, error) {
-
-	return "", nil
+	key := fmt.Sprintf("%s%s", ShortUrlPrefix, url)
+	con := r.GetCon()
+	defer con.Close()
+	reply, err := redis.String(con.Do("GET", key))
+	if err != nil {
+		return "", err
+	}
+	log.GLogger.Info(reply)
+	return reply, nil
 }
 
 func (r *RedisCache) GetCon() redis.Conn {
