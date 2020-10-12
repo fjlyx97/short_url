@@ -19,6 +19,7 @@ func (s *SimpleServer) Init() {
 	s.GinServer.StaticFS("/static/", http.Dir("./views"))
 	s.GinServer.GET("/", s.WebIndex)
 	//s.GinServer.GET("/:url", s.GetUrl)
+	s.GinServer.NoRoute(s.NoRoute)
 	s.GinServer.POST("/", s.SetUrl)
 }
 
