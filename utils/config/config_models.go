@@ -5,6 +5,7 @@ type Config struct {
 	LogModel       `yaml:"log"`
 	SnowFlakeModel `yaml:"snowflake"`
 	MysqlModel     `yaml:"mysql"`
+	RedisModel     `yaml:"redis"`
 }
 
 type BaseModel struct {
@@ -37,4 +38,12 @@ type MysqlModel struct {
 	ConnectTimeout string `yaml:"connect_timeout"`
 	ReadTimeout    string `yaml:"read_timeout"`
 	WriteTimeout   string `yaml:"write_timeout"`
+}
+
+type RedisModel struct {
+	Start      int64  `yaml:"start"`
+	Ip         string `yaml:"ip"`
+	Port       string `yaml:"port"`
+	Password   string `yaml:"password"`
+	ExpireTime int64  `yaml:"expire_time"`
 }

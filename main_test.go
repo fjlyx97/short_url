@@ -22,7 +22,7 @@ func Test_server_SetShortUrl(t *testing.T) {
 	c := pb.NewShortUrlServiceClient(conn)
 	w := sync.WaitGroup{}
 
-	threads := 1
+	threads := 100
 	w.Add(threads)
 	for i := 0; i < threads; i++ {
 		go func() {

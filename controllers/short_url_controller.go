@@ -13,9 +13,10 @@ import (
 type ShortUrlServer struct {
 	urlConversion services.UrlConversion
 	db            dao.DBInterface
+	cache         dao.CacheInterface
 }
 
-func NewShortUrlServer(db dao.DBInterface) *ShortUrlServer {
+func NewShortUrlServer(db dao.DBInterface, cache dao.CacheInterface) *ShortUrlServer {
 	// 初始化短网址算法，可扩展
 	snowFlake, err := snowflake.NewSnowflake(
 		config.GConfig.SnowFlakeModel.StartTimeStamp,
@@ -39,16 +40,35 @@ func NewShortUrlServer(db dao.DBInterface) *ShortUrlServer {
 			config.GConfig.MysqlModel.WriteTimeout,
 		)
 	}
-	log.GLogger.Info("Initial database success.")
-
 	if err != nil {
 		log.GLogger.Error(err)
 		panic(err)
+	}
+	log.GLogger.Info("Initial database success.")
+
+	// 初始化缓存，可扩展
+	if config.GConfig.RedisModel.Start != 0 {
+		switch cache.(type) {
+		case *dao.RedisCache:
+			err = cache.InitCache(
+				config.GConfig.RedisModel.Ip,
+				config.GConfig.RedisModel.Port,
+				config.GConfig.RedisModel.Password,
+			)
+		}
+		if err != nil {
+			log.GLogger.Error(err)
+			panic(err)
+		}
+		log.GLogger.Info("Initial cache success.")
+	} else {
+		cache = nil
 	}
 
 	return &ShortUrlServer{
 		urlConversion: snowFlake,
 		db:            db,
+		cache:         cache,
 	}
 }
 
@@ -66,7 +86,7 @@ func (s *ShortUrlServer) SetShortUrl(ctx context.Context, req *pb.SetUrlReq) (*p
 	}
 	url := req.GetUrl()
 	service := services.ShortUrlService{}
-	shortUrl, err := service.SetShortUrl(s.db, s.urlConversion, url)
+	shortUrl, err := service.SetShortUrl(s.db, s.cache, s.urlConversion, url)
 	if err != nil {
 		log.GLogger.Error(err)
 		rsp.Code = pb.Code_ERR_SERVICE

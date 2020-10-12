@@ -31,6 +31,7 @@ func main() {
 	grpcServer := grpc.NewServer()
 	shortUrlServer := controllers.NewShortUrlServer(
 		&dao.MysqlDB{},
+		&dao.RedisCache{},
 	)
 	pb.RegisterShortUrlServiceServer(grpcServer, shortUrlServer)
 	// 开启健康检查

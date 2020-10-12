@@ -10,8 +10,9 @@ import (
 type ShortUrlService struct {
 }
 
-func (s *ShortUrlService) SetShortUrl(db dao.DBInterface, urlConversion UrlConversion, longUrl string) (string, error) {
+func (s *ShortUrlService) SetShortUrl(db dao.DBInterface, cache dao.CacheInterface, urlConversion UrlConversion, longUrl string) (string, error) {
 	uid, err := urlConversion.NextId()
+	uidB62 := utils.Base10ToBase62(uid)
 	if err != nil {
 		return "", err
 	}
@@ -25,7 +26,15 @@ func (s *ShortUrlService) SetShortUrl(db dao.DBInterface, urlConversion UrlConve
 	if err != nil {
 		return "", err
 	}
-	shortUrl := config.GConfig.BaseModel.BaseUrl + utils.Base10ToBase62(uid)
+	// 写入缓存
+	if cache != nil {
+		err := cache.SetUrl(uidB62, longUrl)
+		if err != nil {
+			return "", nil
+		}
+	}
+
+	shortUrl := config.GConfig.BaseModel.BaseUrl + uidB62
 	return shortUrl, nil
 }
 
