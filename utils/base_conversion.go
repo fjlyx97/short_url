@@ -21,13 +21,21 @@ func Base10ToBase62(number int64) string {
 		number /= 62
 		builder.WriteByte(baseMapEncode[index])
 	}
+	// 反转得到正确的数值
+	s := builder.String()
+	l := builder.Len() - 1
+	builder.Reset()
+	for i, _ := range s {
+		builder.WriteByte(s[l-i])
+	}
 	return builder.String()
 }
 
 func Base62ToBase10(number string) int64 {
 	var result int64 = 0
+	l := len(number) - 1
 	for index, c := range []byte(number) {
-		result += baseMapDecode[string(c)] * int64(math.Pow(62, float64(index)))
+		result += baseMapDecode[string(c)] * int64(math.Pow(62, float64(l-index)))
 	}
 	return result
 }
