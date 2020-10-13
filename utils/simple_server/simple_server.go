@@ -17,6 +17,7 @@ func (s *SimpleServer) Init() {
 	s.GinServer = gin.Default()
 	s.GinServer.LoadHTMLFiles("./views/index.html")
 	s.GinServer.StaticFS("/static/", http.Dir("./views"))
+	s.GinServer.StaticFile("/favicon.ico", "./views/favicon.ico")
 	s.GinServer.GET("/", s.WebIndex)
 	//s.GinServer.GET("/:url", s.GetUrl)
 	s.GinServer.NoRoute(s.NoRoute)
