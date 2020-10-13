@@ -6,10 +6,7 @@
     <title>短链接生成器</title>
     <link rel="stylesheet" type="text/css" href="static/semantic.min.css">
     <link rel="stylesheet" type="text/css" href="static/index.css">
-    <script
-    src="https://code.jquery.com/jquery-3.1.1.min.js"
-    integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-    crossorigin="anonymous"></script>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="static/semantic.min.js"></script>
 </head>
 <body>
@@ -32,8 +29,8 @@
             <h2 class="ui center aligned icon header"><i class="circular users icon"></i> 高性能的分布式短链生成工具 </h2>
             <div id="input">
                 <div class="ui large fluid action input">
-                    <input type="text" placeholder="请输入http://或https://开头的网址">
-                    <div class="ui button">生成</div>
+                    <input type="text" id="urlInput" placeholder="请输入http://或https://开头的网址">
+                    <div class="ui button" id="generate">生成</div>
                 </div>
             </div>
         </div>
@@ -42,7 +39,7 @@
 
     <div id="information">
         <div class="ui segment">
-            <h1 class="ui center aligned icon huge header"> 功能特性 </h2>
+            <h1 class="ui center aligned icon huge header"> 功能特性 </h1>
             <div class="ui center aligned medium header"> 高性能、分布式、毫秒级等待时间 </div>
             <div class="ui center aligned medium header"> 免费体验 </div>
             <div class="ui divider"></div>
@@ -88,3 +85,24 @@
     </div>
 </body>
 </html>
+
+<script>
+    $("#generate").click(function(){
+        const url = $("#urlInput").val();
+        if (!checkUrl(url)) {
+            alert("请输入以http://或https://开头的正确网址")
+        } else {
+            $.post("/",{
+                "url": url
+            },function(data,status){
+                alert("Data: " + data + "nStatus: " + status);
+            });
+        }
+    });
+    function checkUrl(urlString){
+        if(urlString!==""){
+            const reg = /(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?/;
+            return reg.test(urlString);
+        }
+    }
+</script>
