@@ -5,8 +5,7 @@
 
 #service {
     width: 1200px;
-    margin: auto;
-    margin-top: 50px;
+    margin: 50px auto auto;
 }
 
 #input {
@@ -16,15 +15,20 @@
 
 #information {
     width: 1200px;
-    margin: auto;
-    margin-top: 50px;
+    margin: 50px auto auto;
 }
 
 #information_card {
     margin: 30px;
 }
 
+#result {
+    width: 800px;
+    margin: 30px auto auto;
+}
+
 .common {
     width: 1200px;
     margin: auto;
 }
+

@@ -33,6 +33,14 @@
                     <div class="ui button" id="generate">生成</div>
                 </div>
             </div>
+            <div id="result" style="display:none">
+                <div class="ui success message">
+                    <div class="header">
+                        生成成功！
+                    </div>
+                    <p id="shortUrl"></p>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -89,14 +97,17 @@
 <script>
     $("#generate").click(function(){
         const url = $("#urlInput").val();
+        const result = $("#result");
         if (!checkUrl(url)) {
             alert("请输入以http://或https://开头的正确网址")
         } else {
             $.post("/",{
                 "url": url
             },function(data,status){
-                alert("Data: " + data + "nStatus: " + status);
-            });
+                $("#shortUrl").text(data.url);
+                result.show()
+            },
+            "json");
         }
     });
     function checkUrl(urlString){
