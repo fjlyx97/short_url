@@ -56,5 +56,9 @@ CREATE TABLE links (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 ```
 
+# 编译测试服务器demo
+测试服务器位于：short_url/utils/simple_server，基于gin编写，可以对本程序有个直观的认识。
+![image](https://github.com/fjlyx97/short_url/blob/master/test/server.png)
+
 # LICENSE
 The MIT License (MIT)
